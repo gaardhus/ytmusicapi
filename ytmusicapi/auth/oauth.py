@@ -1,6 +1,7 @@
 import json
 import time
 from typing import Dict, Optional
+import webbrowser
 
 import requests
 from requests.structures import CaseInsensitiveDict
@@ -77,6 +78,7 @@ class YTMusicOAuth:
     def setup(self, filepath: Optional[str] = None) -> Dict:
         code = self.get_code()
         url = f"{code['verification_url']}?user_code={code['user_code']}"
+        webbrowser.open(url)
         input(f"Go to {url}, finish the login flow and press Enter when done, Ctrl-C to abort")
         token = self.get_token_from_code(code["device_code"])
         self.dump_token(token, filepath)
